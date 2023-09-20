@@ -1,38 +1,30 @@
 import { useState, useEffect } from "react";
 
 interface BuildingProps {
-  handlePS: any;
   coffee: number;
   setCoffee: (a: number) => void;
   name: string;
   img: string;
-  pS: number;
   upgPrice: number;
-  setUpgPrice: (price: number) => void;
   upgCount: number;
   setUpgCount: (count: number) => void;
 }
 
 function Building({
-  handlePS,
   coffee,
   setCoffee,
   name,
   img,
-  pS,
   upgPrice,
-  setUpgPrice,
   upgCount,
   setUpgCount,
 }: BuildingProps) {
   const [canAfford, setCanAfford] = useState(false);
 
-  function handleClick(inc: number): any {
+  function handleClick(): any {
     if (coffee - upgPrice >= 0) {
-      setUpgPrice(Math.round(upgPrice * 1.05 ** (upgCount + 1)));
       setUpgCount(upgCount + 1);
       setCoffee(coffee - upgPrice);
-      handlePS(inc);
     }
   }
 
@@ -42,11 +34,11 @@ function Building({
 
   return (
     <div
-      className={`outline outline-3 outline-orange-500 flex cursor-pointer items-center gap-4 min-h-max ${
-        canAfford || "bg-red-200 mb-1"
+      className={`outline outline-3 outline-gray-400 flex cursor-pointer items-center min-h-max rounded ${
+        canAfford || "bg-gray-200"
       }`}
       onClick={() => {
-        handleClick(pS);
+        handleClick();
       }}
     >
       <div className="w-32 bg-orange-300 flex-auto">

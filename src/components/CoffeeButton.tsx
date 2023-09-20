@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import coffeeImg from "../coffee-img.jpeg";
+import coffeeImg from "../imgs/coffee-img.avif";
 
 function CoffeeButton(props: {
   pS: number;
@@ -7,8 +7,8 @@ function CoffeeButton(props: {
   setCoffee: (a: number) => void;
 }) {
   const divStyle =
-    "outline outline-2 outline-pink-500 flex-auto w-96 grid justify-center";
-  const buttonStyle = "outline outine-3 cursor-pointer w-96 h-96";
+    "outline outline-3 outline-amber-600 flex-auto w-96 grid justify-center bg-white";
+  const buttonStyle = "cursor-pointer w-96 h-96 grid justify-center";
 
   function handleClick() {
     props.setCoffee(props.coffee + 1);
@@ -29,7 +29,7 @@ function CoffeeButton(props: {
       </div>
       <div>
         <button className={buttonStyle} onClick={handleClick}>
-          <img src={coffeeImg} alt="coffee" />
+          <img src={coffeeImg} alt="coffee" className="h-96" />
         </button>
       </div>
     </div>

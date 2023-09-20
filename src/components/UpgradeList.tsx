@@ -1,8 +1,4 @@
 import Upgrade from "./Upgrade";
-import upg1Img from "../upg-1.png";
-import upg2Img from "../upg-2.jpeg";
-import upg3Img from "../upg-3.jpeg";
-import { useState } from "react";
 
 /**
  * UNRESOLVED BUG
@@ -10,21 +6,17 @@ import { useState } from "react";
  * rendering images directly from upgradesOwned does not yield actual images
  * */
 
-function UpgradeList() {
-  const [upgradesAvailable, setUpgradesAvailable]: any = useState([
-    { img: upg1Img, src: "../upg-1.png", id: 1 },
-    { img: upg2Img, src: "../upg-2.jpeg", id: 2 },
-    { img: upg3Img, src: "../upg-3.jpeg", id: 3 },
-    { img: upg1Img, src: "../upg-1.png", id: 4 },
-    { img: upg2Img, src: "../upg-2.jpeg", id: 5 },
-    { img: upg3Img, src: "../upg-3.jpeg", id: 6 },
-    { img: upg1Img, src: "../upg-1.png", id: 7 },
-    { img: upg2Img, src: "../upg-2.jpeg", id: 8 },
-    { img: upg3Img, src: "../upg-3.jpeg", id: 9 },
-    { img: upg3Img, src: "../upg-3.jpeg", id: 10 },
-  ]);
-  const [upgradesOwned, setUpgradesOwned]: any = useState([]);
-
+function UpgradeList({
+  upgradesAvailable,
+  setUpgradesAvailable,
+  upgradesOwned,
+  setUpgradesOwned,
+}: {
+  upgradesAvailable: any;
+  setUpgradesAvailable: (upgrade: any) => void;
+  upgradesOwned: any;
+  setUpgradesOwned: (array: any) => void;
+}) {
   function removeUpgrade(removedUpgrade: any) {
     setUpgradesAvailable(
       upgradesAvailable.filter(function (upg: any) {
@@ -38,7 +30,7 @@ function UpgradeList() {
   }
 
   return (
-    <div className="outline outine-3 flex-none w-fit px-2">
+    <div className="outline outine-3 outline-amber-600 flex-none w-fit p-2 bg-white">
       <div className="min-h-max">
         <h3>Upgrades Available</h3>
         <div className="grid grid-cols-5 gap-4 grid-flow-row">

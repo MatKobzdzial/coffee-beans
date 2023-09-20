@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function Upgrade({
   upgrade,
   img,
@@ -9,6 +11,8 @@ function Upgrade({
   addUpgrade?: any;
   removeUpgrade?: any;
 }) {
+  const [hovered, isHovered] = useState(false);
+
   function manageClick(event: any) {
     if (addUpgrade && removeUpgrade) {
       addUpgrade(event.target);
@@ -17,8 +21,26 @@ function Upgrade({
     console.log(upgrade.src);
   }
 
+  function handleVis() {
+    isHovered(true);
+  }
+
+  function handleInvis() {
+    isHovered(false);
+  }
+
   return (
-    <div className={`w-16 h-16 outline outline-4`} onClick={manageClick}>
+    <div
+      className={`w-16 h-16 outline outline-4 relative cursor-pointer`}
+      onClick={manageClick}
+      onMouseEnter={handleVis}
+      onMouseLeave={handleInvis}
+    >
+      {hovered && (
+        <div className="absolute bg-slate-800 bottom-3/4 left-3/4 z-10 rounded p-0.5">
+          <p className="text-gray-100">Hovered</p>
+        </div>
+      )}
       <img src={img} alt="upgrade" id={upgrade.id} />
     </div>
   );
