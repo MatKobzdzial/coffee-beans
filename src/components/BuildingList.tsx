@@ -6,7 +6,7 @@ function BuildingList(props: {
   buildings: any;
 }) {
   const styles =
-    "outline outline-3 outline-amber-600 flex-none w-96 flex flex-col gap-1 p-1 bg-white";
+    "outline outline-4 outline-amber-600 flex-none w-96 flex flex-col gap-1 p-1 bg-white";
 
   return (
     <div className={styles}>

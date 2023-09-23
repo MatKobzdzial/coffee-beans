@@ -5,11 +5,13 @@ function Upgrade({
   img,
   addUpgrade,
   removeUpgrade,
+  upgradeInfo,
 }: {
-  upgrade: { img: any; src: string; id: any };
+  upgrade: any;
   img: any;
   addUpgrade?: any;
   removeUpgrade?: any;
+  upgradeInfo?: "string";
 }) {
   const [hovered, isHovered] = useState(false);
 
@@ -17,8 +19,9 @@ function Upgrade({
     if (addUpgrade && removeUpgrade) {
       addUpgrade(event.target);
       removeUpgrade(event.target);
+      console.log(upgrade.basePS);
+      upgrade.effect(2 * upgrade.basePS);
     }
-    console.log(upgrade.src);
   }
 
   function handleVis() {
@@ -38,7 +41,7 @@ function Upgrade({
     >
       {hovered && (
         <div className="absolute bg-slate-800 bottom-3/4 left-3/4 z-10 rounded p-0.5">
-          <p className="text-gray-100">Hovered</p>
+          <p className="text-gray-100 w-24">{upgradeInfo || "Hovered"}</p>
         </div>
       )}
       <img src={img} alt="upgrade" id={upgrade.id} />

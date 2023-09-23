@@ -7,7 +7,7 @@ function CoffeeButton(props: {
   setCoffee: (a: number) => void;
 }) {
   const divStyle =
-    "outline outline-3 outline-amber-600 flex-auto w-96 grid justify-center bg-white";
+    "outline outline-4 outline-amber-600 flex-auto w-96 grid justify-center bg-white";
   const buttonStyle = "cursor-pointer w-96 h-96 grid justify-center";
 
   function handleClick() {

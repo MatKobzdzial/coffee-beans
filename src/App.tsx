@@ -13,6 +13,7 @@ import supervisorImg from "../src/imgs/supervisor-img.avif";
 import studentHelper from "../src/imgs/student-helper-img.png";
 import assistantManagerImg from "../src/imgs/assistant-manager-img.avif";
 import Modal from "./components/Modal";
+import ChangeNameModal from "./components/ChangeNameModal";
 
 function App() {
   const [pS, setPS] = useState(0);
@@ -23,19 +24,6 @@ function App() {
 
   const basePrices = [15, 100, 800, 3000, 12000];
   const basePS = [1, 3, 8, 12, 21];
-
-  const baseUpgrades = [
-    { img: upg1Img, src: "./upg-1.png", id: 1 },
-    { img: upg2Img, src: "./upg-2.jpeg", id: 2 },
-    { img: upg3Img, src: "./upg-3.jpeg", id: 3 },
-    { img: upg1Img, src: "./upg-1.png", id: 4 },
-    { img: upg2Img, src: "./upg-2.jpeg", id: 5 },
-    { img: upg3Img, src: "./upg-3.jpeg", id: 6 },
-    { img: upg1Img, src: "./upg-1.png", id: 7 },
-    { img: upg2Img, src: "./upg-2.jpeg", id: 8 },
-    { img: upg3Img, src: "./upg-3.jpeg", id: 9 },
-    { img: upg3Img, src: "./upg-3.jpeg", id: 10 },
-  ];
 
   //States for buildings
   const [upg1Price, setUpg1Price] = useState(basePrices[0]);
@@ -55,6 +43,105 @@ function App() {
   const [upg3Count, setUpg3Count] = useState(3);
   const [upg4Count, setUpg4Count] = useState(4);
   const [upg5Count, setUpg5Count] = useState(5);
+
+  const baseUpgrades = [
+    {
+      img: upg1Img,
+      src: "./upg-1.png",
+      id: 1,
+      upgradeInfo: "Students are twice as efficient",
+      effect: function () {
+        console.log("Upgrade 1 bought");
+      },
+    },
+    {
+      img: upg2Img,
+      src: "./upg-2.jpeg",
+      id: 2,
+      upgradeInfo: "Students are twice as efficient",
+      effect: function () {
+        console.log("Upgrade 2 bought");
+      },
+    },
+    {
+      img: upg3Img,
+      src: "./upg-3.jpeg",
+      id: 3,
+      upgradeInfo: "Students are twice as efficient",
+      effect: function () {
+        console.log("Upgrade 3 bought");
+      },
+    },
+    {
+      img: upg1Img,
+      src: "./upg-1.png",
+      id: 4,
+      upgradeInfo: "Students are twice as efficient",
+      effect: function () {
+        console.log("Upgrade 4 bought");
+      },
+    },
+    {
+      img: upg2Img,
+      src: "./upg-2.jpeg",
+      id: 5,
+      upgradeInfo: "Students are twice as efficient",
+      effect: function () {
+        console.log("Upgrade 5 bought");
+      },
+    },
+    {
+      img: upg3Img,
+      src: "./upg-3.jpeg",
+      id: 6,
+      upgradeInfo: "Students are twice as efficient",
+      effect: function () {
+        console.log("Upgrade 6 bought");
+      },
+    },
+    {
+      img: upg1Img,
+      src: "./upg-1.png",
+      id: 7,
+      upgradeInfo: "Students are twice as efficient",
+      effect: function () {
+        console.log("Upgrade 7 bought");
+      },
+    },
+    {
+      img: upg2Img,
+      src: "./upg-2.jpeg",
+      id: 8,
+      upgradeInfo: "Students are twice as efficient",
+      effect: function () {
+        console.log("Upgrade 8 bought");
+      },
+    },
+    {
+      img: upg3Img,
+      src: "./upg-3.jpeg",
+      id: 9,
+      upgradeInfo: "2x 1st tower",
+      effect: setUpg1PS,
+      basePS: upg1PS,
+    },
+    {
+      img: upg3Img,
+      src: "./upg-3.jpeg",
+      id: 10,
+      upgradeInfo: "2x 1st tower",
+      effect: setUpg1PS,
+      basePS: upg1PS,
+    },
+    {
+      img: upg3Img,
+      src: "./upg-3.jpeg",
+      id: 11,
+      upgradeInfo: "2x 1st tower",
+      effect: setUpg1PS,
+      basePS: upg1PS,
+    },
+  ];
 
   const [upgradesAvailable, setUpgradesAvailable]: any = useState(baseUpgrades);
   const [upgradesOwned, setUpgradesOwned]: any = useState([]);
@@ -121,31 +208,20 @@ function App() {
   useEffect(
     function () {
       setPS(
-        buildings[0].pS * upg1Count +
-          +buildings[1].pS * upg2Count +
-          +buildings[2].pS * upg3Count +
-          +buildings[3].pS * upg4Count +
-          buildings[4].pS * upg5Count
+        buildings[0].pS * buildings[0].count +
+          +buildings[1].pS * buildings[1].count +
+          +buildings[2].pS * buildings[2].count +
+          +buildings[3].pS * buildings[3].count +
+          buildings[4].pS * buildings[4].count
       );
     },
-    [
-      buildings,
-      upg1Count,
-      upg1Price,
-      upg2Count,
-      upg2Price,
-      upg3Count,
-      upg3Price,
-      upg4Count,
-      upg4Price,
-      upg5Count,
-      upg5Price,
-    ]
+    [buildings]
   );
 
   function handleReset() {
     setPS(0);
     setCoffee(0);
+    setName("");
     buildings.map(function (building, index) {
       building.setPrice(basePrices[index]);
       building.setCount(0);
@@ -153,10 +229,6 @@ function App() {
     });
     setUpgradesAvailable(baseUpgrades);
     setUpgradesOwned([]);
-  }
-
-  function handleFormPopup() {
-    setIsFormOpen(!isFormOpen);
   }
 
   function changeName(event: any) {
@@ -173,38 +245,54 @@ function App() {
   }, [buildings]);
 
   const [openModal, setOpenModal] = useState(false);
+  const [openChangeNameModal, setOpenChangeNameModal] = useState(false);
+  const [nameDup, setNameDup] = useState("");
+
+  function handleChangeNameModal() {
+    setOpenChangeNameModal(true);
+    setNameDup(name);
+  }
 
   function handleModal() {
     setOpenModal(true);
   }
 
+  function handleSubmit(event: any) {
+    event.preventDefault();
+  }
+
+  const changeNameModal = (
+    <ChangeNameModal
+      nameDup={nameDup}
+      setNameDup={setNameDup}
+      name={name}
+      setName={setName}
+      handleChangeNameModal={setOpenChangeNameModal}
+    ></ChangeNameModal>
+  );
+
   const modal = (
     <Modal handleReset={handleReset} handleModal={setOpenModal}></Modal>
   );
 
+  const [title, setTitle] = useState(2);
+
   return (
     <div className="h-screen bg-amber-100">
       {openModal && modal}
+      {openChangeNameModal && changeNameModal}
       <div className="flex justify-between mb-2 ml-2 self-center">
-        <div className="flex gap-4">
-          {isFormOpen ? (
-            <h1 className="text-4xl">
-              {name === "" ? "Coffee Beans Cafe" : `${name}'s Cafe`}
-            </h1>
-          ) : (
-            <input
-              className="outline rounded mt-0.5 ml-0.5 focus"
-              value={name}
-              onChange={changeName}
-            />
-          )}
+        <form className="flex gap-4" onSubmit={handleSubmit}>
+          <h1 className="text-4xl">
+            {name === "" ? "Coffee Beans Cafe" : `${name}'s Cafe`}
+          </h1>
           <button
             className="outline outline-2 rounded-lg p-1 mt-1 bg-sky-100 outline-sky-700 text-sky-700 self-center"
-            onClick={handleFormPopup}
+            onClick={handleChangeNameModal}
           >
             Change Name
           </button>
-        </div>
+        </form>
         <button
           // onClick={handleReset}
           onClick={handleModal}

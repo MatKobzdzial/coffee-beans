@@ -18,7 +18,10 @@ function Modal({
 
   return ReactDOM.createPortal(
     <div>
-      <div className="fixed inset-0 bg-gray-500 opacity-50"></div>
+      <div
+        className="fixed inset-0 bg-gray-500 opacity-50"
+        onClick={onCancel}
+      ></div>
       <div className="fixed inset-80 p-10 bg-slate-100 rounded">
         <div className="flex flex-col justify-between h-full">
           Do You want to reset Your progress?

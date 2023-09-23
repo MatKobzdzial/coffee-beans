@@ -34,7 +34,7 @@ function Building({
 
   return (
     <div
-      className={`outline outline-3 outline-gray-400 flex cursor-pointer items-center min-h-max rounded ${
+      className={`outline outline-3 outline-gray-400 flex gap-x-2 cursor-pointer items-center min-h-max rounded ${
         canAfford || "bg-gray-200"
       }`}
       onClick={() => {
@@ -48,7 +48,9 @@ function Building({
         <div>{name}</div>
         <div>{upgPrice}$</div>
       </div>
-      <div className="flex-auto w-32 outline outline-3">Count: {upgCount}</div>
+      <div className="flex-auto w-24 outline outline-3 mr-2 rounded px-0.5">
+        Count: {upgCount}
+      </div>
     </div>
   );
 }
