@@ -19,8 +19,6 @@ function Upgrade({
     if (addUpgrade && removeUpgrade) {
       addUpgrade(event.target);
       removeUpgrade(event.target);
-      console.log(upgrade.basePS);
-      upgrade.effect(2 * upgrade.basePS);
     }
   }
 
@@ -35,7 +33,6 @@ function Upgrade({
   return (
     <div
       className={`w-16 h-16 outline outline-4 relative cursor-pointer`}
-      onClick={manageClick}
       onMouseEnter={handleVis}
       onMouseLeave={handleInvis}
     >
@@ -44,7 +41,7 @@ function Upgrade({
           <p className="text-gray-100 w-24">{upgradeInfo || "Hovered"}</p>
         </div>
       )}
-      <img src={img} alt="upgrade" id={upgrade.id} />
+      <img onClick={manageClick} src={img} alt="upgrade" id={upgrade.id} />
     </div>
   );
 }

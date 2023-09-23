@@ -20,7 +20,6 @@ function App() {
   const [coffee, setCoffee] = useState(0);
 
   const [name, setName] = useState("");
-  const [isFormOpen, setIsFormOpen] = useState(true);
 
   const basePrices = [15, 100, 800, 3000, 12000];
   const basePS = [1, 3, 8, 12, 21];
@@ -44,102 +43,72 @@ function App() {
   const [upg4Count, setUpg4Count] = useState(4);
   const [upg5Count, setUpg5Count] = useState(5);
 
+  /**
+   * UNRESOLVED BUG
+   *
+   * upgrades don't work properly, resetting state causes trouble
+   * */
+
   const baseUpgrades = [
     {
       img: upg1Img,
       src: "./upg-1.png",
       id: 1,
-      upgradeInfo: "Students are twice as efficient",
-      effect: function () {
-        console.log("Upgrade 1 bought");
-      },
+      upgradeInfo: "Upgrade 1",
     },
     {
       img: upg2Img,
       src: "./upg-2.jpeg",
       id: 2,
-      upgradeInfo: "Students are twice as efficient",
-      effect: function () {
-        console.log("Upgrade 2 bought");
-      },
+      upgradeInfo: "Upgrade 2",
     },
     {
       img: upg3Img,
       src: "./upg-3.jpeg",
       id: 3,
-      upgradeInfo: "Students are twice as efficient",
-      effect: function () {
-        console.log("Upgrade 3 bought");
-      },
+      upgradeInfo: "Upgrade 3",
     },
     {
       img: upg1Img,
       src: "./upg-1.png",
       id: 4,
-      upgradeInfo: "Students are twice as efficient",
-      effect: function () {
-        console.log("Upgrade 4 bought");
-      },
+      upgradeInfo: "Upgrade 4",
     },
     {
       img: upg2Img,
       src: "./upg-2.jpeg",
       id: 5,
-      upgradeInfo: "Students are twice as efficient",
-      effect: function () {
-        console.log("Upgrade 5 bought");
-      },
+      upgradeInfo: "Upgrade 5",
     },
     {
       img: upg3Img,
       src: "./upg-3.jpeg",
       id: 6,
-      upgradeInfo: "Students are twice as efficient",
-      effect: function () {
-        console.log("Upgrade 6 bought");
-      },
+      upgradeInfo: "Upgrade 6",
     },
     {
       img: upg1Img,
       src: "./upg-1.png",
       id: 7,
-      upgradeInfo: "Students are twice as efficient",
-      effect: function () {
-        console.log("Upgrade 7 bought");
-      },
+      upgradeInfo: "Upgrade 7",
     },
     {
       img: upg2Img,
       src: "./upg-2.jpeg",
       id: 8,
-      upgradeInfo: "Students are twice as efficient",
-      effect: function () {
-        console.log("Upgrade 8 bought");
-      },
+      upgradeInfo: "Upgrade 8",
     },
     {
       img: upg3Img,
       src: "./upg-3.jpeg",
       id: 9,
-      upgradeInfo: "2x 1st tower",
-      effect: setUpg1PS,
-      basePS: upg1PS,
+      upgradeInfo: "Upgrade 9",
     },
     {
       img: upg3Img,
       src: "./upg-3.jpeg",
       id: 10,
-      upgradeInfo: "2x 1st tower",
-      effect: setUpg1PS,
-      basePS: upg1PS,
-    },
-    {
-      img: upg3Img,
-      src: "./upg-3.jpeg",
-      id: 11,
-      upgradeInfo: "2x 1st tower",
-      effect: setUpg1PS,
-      basePS: upg1PS,
+      upgradeInfo: "Upgrade 10",
     },
   ];
 
@@ -153,6 +122,7 @@ function App() {
       img: studentHelper,
       basePS: basePS[0],
       pS: upg1PS,
+      setPS: setUpg1PS,
       basePrice: basePrices[0],
       price: upg1Price,
       count: upg1Count,
@@ -164,6 +134,7 @@ function App() {
       img: cashierImg,
       basePS: basePS[1],
       pS: upg2PS,
+      setPS: setUpg2PS,
       basePrice: basePrices[1],
       price: upg2Price,
       count: upg2Count,
@@ -175,6 +146,7 @@ function App() {
       img: baristaImg,
       basePS: basePS[2],
       pS: upg3PS,
+      setPS: setUpg3PS,
       basePrice: basePrices[2],
       price: upg3Price,
       count: upg3Count,
@@ -186,6 +158,7 @@ function App() {
       img: supervisorImg,
       basePS: basePS[3],
       pS: upg4PS,
+      setPS: setUpg4PS,
       basePrice: basePrices[3],
       price: upg4Price,
       count: upg4Count,
@@ -197,6 +170,7 @@ function App() {
       img: assistantManagerImg,
       basePS: basePS[4],
       pS: upg5PS,
+      setPS: setUpg5PS,
       basePrice: basePrices[4],
       price: upg5Price,
       count: upg5Count,
@@ -218,22 +192,20 @@ function App() {
     [buildings]
   );
 
-  function handleReset() {
+  const handleReset = () => {
     setPS(0);
     setCoffee(0);
     setName("");
-    buildings.map(function (building, index) {
+    buildings.map((building, index) => {
       building.setPrice(basePrices[index]);
+      building.setPS(basePS[index]);
       building.setCount(0);
+      console.log(building.count, building.price);
       return building;
     });
     setUpgradesAvailable(baseUpgrades);
     setUpgradesOwned([]);
-  }
-
-  function changeName(event: any) {
-    setName(event.target.value);
-  }
+  };
 
   useEffect(() => {
     buildings.map(function (building) {
@@ -275,8 +247,6 @@ function App() {
     <Modal handleReset={handleReset} handleModal={setOpenModal}></Modal>
   );
 
-  const [title, setTitle] = useState(2);
-
   return (
     <div className="h-screen bg-amber-100">
       {openModal && modal}
@@ -294,7 +264,6 @@ function App() {
           </button>
         </form>
         <button
-          // onClick={handleReset}
           onClick={handleModal}
           className="outline outline-2 rounded-lg px-4 py-0.5 mt-1 mr-2 bg-red-100 outline-red-700 text-red-700 self-center"
         >

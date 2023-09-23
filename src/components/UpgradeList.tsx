@@ -42,7 +42,6 @@ function UpgradeList({
         ) : (
           <div className="grid grid-cols-5 gap-4 grid-flow-row">
             {upgradesAvailable.map((upgrade: any) => {
-              // console.log(upgrade.effect);
               return (
                 <Upgrade
                   upgrade={upgrade}
